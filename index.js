@@ -17,10 +17,27 @@ const news_api_key='6dec502440ff4ba88d081de58e7928aa';
 app.get("/",(req,res)=>{
     res.send("<h1>hello there server is on baby let's start</h1>")
 })
-app.get("/news",async (req,res)=>{
+app.post("/news",async (req,res)=>{
+    const {cn}=(req.body);
+    var value='in';
+    if(cn=='India'){
+      value='in';
+    }
+    else if(cn=="Australia"){
+        value='au';
+    }
+    else if(cn=="Pakistan"){
+        value='pk';
+    }
+    else if(cn=="USA"){
+        value='us';
+    }
+    else if(cn=="Canada"){
+        value='ca';
+    }
     try{
-        const data= await axios.get("https://newsapi.org/v2/top-headlines?country=in&apiKey=6dec502440ff4ba88d081de58e7928aa");
-        console.log(data.data);
+        const data= await axios.get(`https://newsapi.org/v2/top-headlines?country=${value}&apiKey=6dec502440ff4ba88d081de58e7928aa`);
+        // console.log(data.data);
         res.json(data.data);
     }
     catch(e){
@@ -30,7 +47,7 @@ app.get("/news",async (req,res)=>{
 app.get("/sources",async (req,res)=>{
     try{
         const data= await axios.get("https://newsapi.org/v2/top-headlines/sources?apiKey=6dec502440ff4ba88d081de58e7928aa");
-        console.log(data);
+        // console.log(data);
         res.json(data.data);
     }
     catch(e){
